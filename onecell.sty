@@ -1,0 +1,61 @@
+\RequirePackage{xparse,array,l3keys2e}
+
+\ProvidesExplPackage
+  {onecell} {2017/09/18}
+  {v0.1}    {Place contents into a single cell}
+
+% code from https://tex.stackexchange.com/a/358114/117050
+\newcolumntype{?}{!{\d@llarend&\span\@gobbletwo}}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\onecell}%
+  {s >{ \onecell_excl:n }t! O{} O{\l_onecell_align_tl} +m}{{%
+  \if\relax\detokenize{#3}\relax%
+    \@onecell{#1}{#2}{\l_onecell_columns_tl}{#4}{#5}%
+  \else%
+    \@onecell{#1}{#2}{#3}{#4}{#5}%
+  \fi}}
+\NewDocumentCommand{\@onecell}{m m m m +m}{%
+  \onecell_starred:Nn{#1}{\hspace*{-\tabcolsep}}%
+  \def\onecell@tempa{\begin{tabular}[#4]}%
+  \edef\onecell@tempb{#3\IfBooleanF{#2}{?#3}}%
+  \expandafter\onecell@tempa\expandafter{\onecell@tempb}%
+    #5%
+  \end{tabular}\onecell_starred:Nn{#1}{\hspace*{-\tabcolsep}}}
+
+\msg_new:nnn { onecell } { unknown_key }
+  { The\ key\ #1\ is\ unknown\ and\ therefore\ ignored! }
+
+\NewDocumentCommand{\onecellOptions}{ +m }{%
+  \keys_set:nn { onecell } { #1 }}
+
+\keys_define:nn { onecell } {
+  ,col     .tl_set_x:N       = \l_onecell_columns_tl
+  ,col     .value_required:n = true
+  ,columns .meta:n           = { col = #1 }
+  ,align   .tl_set_x:N       = \l_onecell_align_tl
+  ,pad     .choice:
+  ,pad     / remove .code:n  = \cs_set_eq:NN \onecell_starred:Nn \IfBooleanF
+  ,pad     / leave  .code:n  = \cs_set_eq:NN \onecell_starred:Nn \IfBooleanT
+  ,pad     .value_required:n = true
+  ,repeat  .choice:
+  ,repeat  / true   .code:n  = \cs_new_nopar:Npn \onecell_excl:n ##1 {
+    \def\ProcessedArgument{##1} }
+  ,repeat  / false  .code:n  = \cs_set_eq:NN \onecell_excl:n \ReverseBoolean
+  ,repeat  .default:n        = true
+  ,default .meta:n           = {
+    ,col   = c
+    ,align = c
+    ,pad   = remove
+    ,repeat
+  }
+  ,default .value_forbidden:n = true
+  ,unknown .code:n     = {
+    \msg_error:nnx { onecell } { unknown_key } { \l_keys_key_tl }
+  }
+}
+
+\keys_set:nn { onecell } { default }
+
+\ProcessKeysOptions { onecell }
+\ExplSyntaxOff
