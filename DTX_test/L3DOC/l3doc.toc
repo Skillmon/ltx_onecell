@@ -1,0 +1,42 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.0.1}
+\contentsline {section}{\numberline {2}Features of other packages}{2}{section.0.2}
+\contentsline {subsection}{\numberline {2.1}The \pkg {hypdoc} package}{2}{subsection.0.2.1}
+\contentsline {subsection}{\numberline {2.2}The \pkg {docmfp} package}{3}{subsection.0.2.2}
+\contentsline {subsection}{\numberline {2.3}The \pkg {xdoc2} package}{3}{subsection.0.2.3}
+\contentsline {subsection}{\numberline {2.4}The \pkg {gmdoc} package}{3}{subsection.0.2.4}
+\contentsline {section}{\numberline {3}Problems \& Todo}{3}{section.0.3}
+\contentsline {section}{\numberline {4}Documentation}{4}{section.0.4}
+\contentsline {subsection}{\numberline {4.1}Configuration}{4}{subsection.0.4.1}
+\contentsline {subsection}{\numberline {4.2}Partitioning documentation and implementation}{4}{subsection.0.4.2}
+\contentsline {subsection}{\numberline {4.3}General text markup}{4}{subsection.0.4.3}
+\contentsline {subsection}{\numberline {4.4}Describing functions in the documentation}{5}{subsection.0.4.4}
+\contentsline {subsection}{\numberline {4.5}Describing functions in the implementation}{6}{subsection.0.4.5}
+\contentsline {subsection}{\numberline {4.6}Keeping things consistent}{7}{subsection.0.4.6}
+\contentsline {subsection}{\numberline {4.7}Documenting templates}{8}{subsection.0.4.7}
+\contentsline {section}{\numberline {5}\pkg {l3doc} implementation}{8}{section.0.5}
+\contentsline {subsection}{\numberline {5.1}Variables}{8}{subsection.0.5.1}
+\contentsline {subsection}{\numberline {5.2}Variants and helpers}{13}{subsection.0.5.2}
+\contentsline {subsection}{\numberline {5.3}Messages}{19}{subsection.0.5.3}
+\contentsline {subsection}{\numberline {5.4}Options and configuration}{20}{subsection.0.5.4}
+\contentsline {subsection}{\numberline {5.5}Class and package loading}{21}{subsection.0.5.5}
+\contentsline {subsection}{\numberline {5.6}Configuration and tweaks}{22}{subsection.0.5.6}
+\contentsline {subsection}{\numberline {5.7}Design}{23}{subsection.0.5.7}
+\contentsline {subsection}{\numberline {5.8}Text markup}{24}{subsection.0.5.8}
+\contentsline {subsection}{\numberline {5.9}Implementing text markup}{28}{subsection.0.5.9}
+\contentsline {subsubsection}{\numberline {5.9.1}Common between \env {macro} and \env {function}}{30}{subsubsection.0.5.9.1}
+\contentsline {subsubsection}{\numberline {5.9.2}The \env {function} environment}{34}{subsubsection.0.5.9.2}
+\contentsline {subsubsection}{\numberline {5.9.3}The \env {macro} environment}{42}{subsubsection.0.5.9.3}
+\contentsline {subsubsection}{\numberline {5.9.4}Misc}{50}{subsubsection.0.5.9.4}
+\contentsline {subsection}{\numberline {5.10}Documenting templates}{52}{subsection.0.5.10}
+\contentsline {subsection}{\numberline {5.11}Inheriting doc}{53}{subsection.0.5.11}
+\contentsline {subsubsection}{\numberline {5.11.1}The \env {macrocode} environment}{56}{subsubsection.0.5.11.1}
+\contentsline {subsection}{\numberline {5.12}At end document}{57}{subsection.0.5.12}
+\contentsline {subsection}{\numberline {5.13}Indexing}{59}{subsection.0.5.13}
+\contentsline {subsubsection}{\numberline {5.13.1}Userspace commands}{59}{subsubsection.0.5.13.1}
+\contentsline {subsubsection}{\numberline {5.13.2}Internal index commands}{60}{subsubsection.0.5.13.2}
+\contentsline {subsubsection}{\numberline {5.13.3}Finding sort-key and module}{63}{subsubsection.0.5.13.3}
+\contentsline {subsection}{\numberline {5.14}Change history}{65}{subsection.0.5.14}
+\contentsline {subsection}{\numberline {5.15}Default configuration}{66}{subsection.0.5.15}
+\contentsline {subsection}{\numberline {5.16}Internal macros for \LaTeX 3 sources}{66}{subsection.0.5.16}
+\contentsline {subsection}{\numberline {5.17}Math extras}{66}{subsection.0.5.17}
+\contentsline {subsection}{\numberline {5.18}Makeindex configuration}{67}{subsection.0.5.18}

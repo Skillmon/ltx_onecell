@@ -8,23 +8,35 @@
 \newcolumntype{?}{!{\d@llarend&\span\@gobbletwo}}
 
 \ExplSyntaxOn
+\tl_new:N \l_onecell_align_tl
+\tl_new:N \l_onecell_columns_tl
+\tl_new:N \l_onecell_use_cols_tl
+
 \NewDocumentCommand{\onecell}%
-  {s >{ \onecell_excl:n }t! O{} O{\l_onecell_align_tl} +m}{{%
-  \if\relax\detokenize{#3}\relax%
-    \@onecell{#1}{#2}{\l_onecell_columns_tl}{#4}{#5}%
-  \else%
-    \@onecell{#1}{#2}{#3}{#4}{#5}%
-  \fi}}
-\NewDocumentCommand{\@onecell}{m m m m +m}{%
-  \onecell_starred:Nn{#1}{\hspace*{-\tabcolsep}}%
-  \def\onecell@tempa{\begin{tabular}[#4]}%
-  \edef\onecell@tempb{#3\IfBooleanF{#2}{?#3}}%
-  \expandafter\onecell@tempa\expandafter{\onecell@tempb}%
+{
+  s 
+  >{ \onecell_excl:n }t!
+  >{ \onecell_processor_Optional_O:Vn \l_onecell_columns_tl }O{}
+  O{\l_onecell_align_tl}
+  +m
+}{{
+  \onecell_starred:Nn{#1}{\hspace*{-\tabcolsep}}
+  \cs_set_nopar:Nn \onecell_tabular: { \begin{tabular}[#4] }
+  \exp_args:Nx \onecell_tabular: { #3 \IfBooleanF{ #2 }{ ?#3 } }
     #5%
-  \end{tabular}\onecell_starred:Nn{#1}{\hspace*{-\tabcolsep}}}
+  \end{tabular}
+  \onecell_starred:Nn{#1}{\hspace*{-\tabcolsep}}
+}}
+
+\cs_new:Nn \onecell_processor_Optional_O:nn {
+  \tl_if_empty:nTF { #2 }
+    { \def\ProcessedArgument{#1} }
+    { \def\ProcessedArgument{#2} }
+}
+\cs_generate_variant:Nn \onecell_processor_Optional_O:nn { Vn }
 
 \msg_new:nnn { onecell } { unknown_key }
-  { The\ key\ #1\ is\ unknown\ and\ therefore\ ignored! }
+  { The~key~#1~is~unknown~and~therefore~ignored! }
 
 \NewDocumentCommand{\onecellOptions}{ +m }{%
   \keys_set:nn { onecell } { #1 }}
