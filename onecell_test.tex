@@ -1,0 +1,35 @@
+\documentclass[]{article}
+
+\usepackage{array}
+\newcolumntype{?}{c}
+\usepackage{onecell}
+
+\onecellOptions{columns=r,align=t}
+%\onecellOptions{pad=add}
+%\onecellOptions{repeat=false}
+
+\begin{document}
+\noindent
+\begin{tabular}[]{|l|c|r|p{5cm}|}
+  one & ordinary & line & containing only normal stuff and no \verb|\onecell|\\
+  \hline
+  \onecell[l]{foo\\bar}
+  %\begin{tabular}{@{}l@{}}foo\\bar\end{tabular}
+  & \onecell[][t]{1\\22\\333}
+  & \onecell[r][b]{choot & choot\\&motherfucker}
+  & \onecell*![|ll|]{foo & bar\\baz & bum}
+\end{tabular}
+
+{\fboxsep=-\fboxrule%
+  \fbox{\onecell*![@{}rlrl@{}]{\hline this&is&my&table\\\hline and&it&is&great\\\hline}}%
+}
+
+%\onecellOptions{foo}
+\begin{tabular}[]{ll}
+  \onecell[][b]{abc\\b}&c\\
+  \begin{tabular}[t]{@{}c@{}}
+    a\\b
+  \end{tabular}&c
+\end{tabular}
+\onecell{\texttt{\detokenize{\onecell}}}
+\end{document}

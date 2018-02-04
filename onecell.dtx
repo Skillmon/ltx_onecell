@@ -1,0 +1,364 @@
+% \iffalse meta-comment
+%
+% File: onecell.dtx Copyright (C) 2017-2018 Jonathan P. Spratte
+%
+% It may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License (LPPL), either version 1.3c of this license or (at your
+% option) any later version.  The latest version of this license is in the file
+%
+%   https://www.latex-project.org/lppl.txt
+%
+% ------------------------------------------------------------------------------
+%
+%<*driver>
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+\input l3docstrip.tex
+\askforoverwritefalse
+\preamble
+
+--------------------------------------------------------------
+onecell -- place contents into a single cell
+E-mail: jspratte@yahoo.de
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+--------------------------------------------------------------
+
+Copyright (C) 2017-2018 Jonathan P. Spratte
+
+This  work may be  distributed and/or  modified under  the conditions  of the
+LaTeX Project Public License (LPPL),  either version 1.3c  of this license or
+(at your option) any later version.  The latest version of this license is in
+the file:
+
+  http://www.latex-project.org/lppl.txt
+
+This work is "maintained" (as per LPPL maintenance status) by
+  Jonathan P. Spratte.
+
+This work consists of the file  onecell.dtx
+and the derived files           onecell.ins,
+                                onecell.pdf and
+                                onecell.sty.
+
+\endpreamble
+% stop docstrip adding \endinput
+\postamble
+\endpostamble
+\generate{\file{onecell.sty}{\from{onecell.dtx}{pkg}}}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</driver>
+%
+%<*driver|pkg>
+\RequirePackage{xparse,array,l3keys2e}
+%</driver|pkg>
+%
+%<*driver>
+\ProvidesFile{onecell.dtx}[2018/02/04 Place contents into a single cell]
+\documentclass{l3doc}
+\usepackage{enumitem}
+\newenvironment{options}
+  {\begin{description}[style=nextline,font=\normalfont\ttfamily]}
+  {\end{description}}
+\begin{document}
+  \DocInput{onecell.dtx}
+\end{document}
+%</driver>
+%
+%<*pkg>
+\ProvidesExplPackage
+  {onecell} {2017/09/18}
+  {v0.1}    {Place contents into a single cell}
+%</pkg>
+% \fi
+%
+% \title{The \pkg{onecell} package}
+% \author{Jonathan P. Spratte\thanks{E-mail: jspratte@yahoo.de}}
+% \date{Released 2018/02/04}
+% \maketitle
+% \tableofcontents
+%
+% \begin{documentation}
+%
+% \section{Introduction}
+%
+% This is a package to put many cells into a single one inside of a
+% \env{tabular} environment. Its purpose is similar to that of \pkg{makecell}
+% but should be more versatile in using different column specifiers and more
+% than one column. It is in no way meant to supersede \pkg{makecell}.
+%
+% It is written as a \enquote{self-contained} docstrip file: executing
+% |latex onecell.dtx| generates the \file{onecell.sty} file and typesets this
+% documentation; execute |tex onecell.dtx| to only generate \file{onecell.sty}.
+%
+% \section{Documentation}
+%
+% \subsection{Column Specifier}
+%
+% \begin{function}{\onecellCycle}
+%   This column specifier cycles the column specifiers behind it until every
+%   used column is defined. It must be preceded by at least one valid column
+%   specifier. If it is already defined when the package tries to define it an
+%   error message is displayed. The definition is omitted and the column
+%   specifier doesn't get used automatically.
+% \end{function}
+%
+% \subsection{Macros}
+%
+% \begin{function}{\onecell}
+%   \begin{syntax}
+%     \cs{onecell}\meta{*}\meta{!}\oarg{columns}\oarg{alignment}\marg{contents}
+%   \end{syntax}
+%   This command is the actual macro typesetting \meta{contents} as one cell.
+%   For this a \env{tabular} environment is used. By default you can use any
+%   number of rows and columns in \meta{contents} without taking care. This is
+%   done using |\onecellCycle|. As a side effect, this would also cycle over
+%   |@{}| at the end of the column specifications. Because of this, by default
+%   there is no such code to prevent the leading and trailing |\tabcolsep| but a
+%   |\hspace*{-\tabcolsep}| before and after the \env{tabular}.
+%
+%   If |*| is given those |\hspace*{-\tabcolsep}|s are not used.
+%   If you specify \meta{columns} what in fact is used is
+%   \texttt{\{\meta{columns}\cs{onecellCycle}\meta{columns}\}}. The default is
+%   also used if you give an empty argument. The package default is |c|.
+%   Using |!| results in the literal interpretation of \meta{columns} so without
+%   adding |\onecellCycle| to it.
+%   Finally the \meta{alignment} is the vertical alignment which is directly
+%   given to \env{tabular}.
+% \end{function}
+%
+% \begin{function}{\onecellOptions}
+%   \begin{syntax}
+%     \cs{onecellOptions}\marg{options}
+%   \end{syntax}
+%   Lets you change the default behaviour of \cs{onecell}. You can specify any
+%   options listed in \autoref{sec:options}.
+% \end{function}
+%
+% \subsection{Options}\label{sec:options}
+%
+% The package knows the following options (as key=value syntax):
+% \begin{options}
+%   \item[col\textit{umns}=\meta{tl}]
+%     sets the default column specifier used. Package default is |c|. Both |col|
+%     and |columns| will work.
+%   \item[align=\meta{tl}]
+%     sets the default vertical alignment. Package default is |c|.
+%   \item[pad=\meta{choice}]
+%     is a choice key. Known choices are:
+%     \begin{options}
+%       \item[remove]
+%         surrounding space is removed using |\hspace*{-\labelsep}|. This is the
+%         package default.
+%       \item[leave]
+%         surrounding space is not removed.
+%     \end{options}
+%     The optional |*| for \cs{onecell} always sets the opposite of the defined
+%     |pad| key.
+%   \item[repeat=\meta{bool}]
+%     is a boolean key. If it is set to true, the specified \meta{columns} to
+%     \cs{onecell} are repeated using the \cs{onecellCycle} column specifier.
+%     The optional |!| for \cs{onecell} always sets the opposite of the defined
+%     |repeat|. Package default is |true|.
+%   \item[default]
+%     reverts every other key to the package default.
+% \end{options}
+%
+% \end{documentation}
+%
+% \begin{implementation}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*pkg>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<@@=onecell>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ExplSyntaxOn
+%    \end{macrocode}
+%
+% \subsection{Variables}
+%
+% \begin{variable}{\l_onecell_align_tl}
+%   Stores the default vertical alignment.
+%    \begin{macrocode}
+\tl_new:N \l_onecell_align_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_onecell_columns_tl}
+%   Stores the default column specifiers (without \cs{onecellCycle} and the
+%   repetition).
+%    \begin{macrocode}
+\tl_new:N \l_onecell_columns_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_column_already_defined_bool}
+%   Set to true if \cs{onecellCycle} was already defined.
+%    \begin{macrocode}
+\bool_new:N \g_@@_column_already_defined_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsection{Messages}
+%
+%    \begin{macrocode}
+\msg_new:nnn { onecell } { unknown_key }
+  { The~key~#1~is~unknown~and~therefore~ignored! }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\msg_new:nnnn { onecell } { column_already_defined }
+  { The~column~specifier~'\string\onecellCycle'~is~already~defined. }
+  {
+    The~package~will~set~the~key~'repeat'~and~its~package~default~to~false.\\
+    See~the~documentation~for~what~that~implies.
+  }
+%    \end{macrocode}
+%
+% \subsection{Column specifier}
+%
+% \begin{macro}{\onecellCycle}
+% Code from \url{https://tex.stackexchange.com/a/358114/117050}
+%    \begin{macrocode}
+\ifcsname NC@find@\string\onecellCycle\endcsname
+  \msg_error:nn { onecell } { column_already_defined }
+  \bool_gset_true:N \g_@@_column_already_defined_bool
+\else
+  \newcolumntype{\onecellCycle}{!{\d@llarend&\span\@gobbletwo}}
+\fi
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Options and configuration}
+%
+%    \begin{macrocode}
+\keys_define:nn { onecell }
+  {
+    ,col     .tl_set_x:N       = \l_onecell_columns_tl
+    ,col     .value_required:n = true
+    ,columns .meta:n           = { col = #1 }
+    ,align   .tl_set_x:N       = \l_onecell_align_tl
+    ,pad     .choice:
+    ,pad     / remove .code:n  =
+      \cs_set_eq:NN \@@_starred:Nn \IfBooleanF
+    ,pad     / leave  .code:n  =
+      \cs_set_eq:NN \@@_starred:Nn \IfBooleanT
+    ,pad     .value_required:n = true
+    ,repeat  .choice:
+    ,repeat  / true   .code:n  = 
+      \cs_set_protected:Nn \@@_processor_excl:n
+        { \def\ProcessedArgument{##1} }
+    ,repeat  / false  .code:n  = 
+      \cs_set_eq:NN \@@_processor_excl:n \ReverseBoolean
+    ,repeat  .default:n        = true
+    ,unknown .code:n     = {
+      \msg_error:nnx { onecell } { unknown_key } { \l_keys_key_tl }
+    }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_column_already_defined_bool
+  {
+    \keys_define:nn { onecell } {
+      ,default .meta:n = {
+        ,col = c
+        ,align = c
+        ,pad = remove
+        ,repeat = false
+      }
+      ,default .value_forbidden:n = true
+    }
+  }
+  {
+    \keys_define:nn { onecell } {
+      ,default .meta:n = {
+        ,col = c
+        ,align = c
+        ,pad = remove
+        ,repeat = true
+      }
+      ,default .value_forbidden:n = true
+    }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\keys_set:nn { onecell } { default }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ProcessKeysOptions { onecell }
+%    \end{macrocode}
+%
+% \subsection{Macros}
+%
+% \subsubsection{User level}
+%
+% \begin{macro}{\onecell}
+%    \begin{macrocode}
+\NewDocumentCommand{\onecell}
+  {
+    s 
+    >{ \@@_processor_excl:n }t!
+    >{ \@@_processor_Optional_O:Vn \l_onecell_columns_tl }O{}
+    O{\l_onecell_align_tl}
+    +m
+  }{{
+    \@@_starred:Nn{#1}{\hspace*{-\tabcolsep}}
+    \cs_set_protected_nopar:Nn \@@_tabular: { \begin{tabular}[#4] }
+    \IfBooleanTF { #2 }
+      { \@@_tabular: { #3 } }
+      { \@@_tabular: { #3 \onecellCycle #3 } }
+      #5%
+    \end{tabular}
+    \@@_starred:Nn{#1}{\hspace*{-\tabcolsep}}
+  }}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\onecellOptions}
+%    \begin{macrocode}
+\NewDocumentCommand{\onecellOptions}{ +m }
+  { \keys_set:nn { onecell } { #1 } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Auxiliary}
+%
+% \begin{macro}{\@@_processor_Optional_O:nn, \@@_processor_Optional_O:Vn}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_processor_Optional_O:nn
+  {
+    \tl_if_empty:nTF { #2 }
+      { \def\ProcessedArgument{#1} }
+      { \def\ProcessedArgument{#2} }
+  }
+\cs_generate_variant:Nn \@@_processor_Optional_O:nn { Vn }
+%    \end{macrocode}
+% \end{macro}
+%
+% \end{implementation}
+%
+% \PrintIndex
+%
+%    \begin{macrocode}
+\ExplSyntaxOff
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</pkg>
+%    \end{macrocode}
