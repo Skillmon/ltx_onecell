@@ -14,6 +14,7 @@ PDF = $(TST:%.tex=%.pdf)
 all: $(DOC)
 sty: $(STY)
 test: $(PDF)
+doc: $(DOC)
 
 $(DOC): $(DTX)
 	$(LTX) $(DTX)
@@ -21,11 +22,11 @@ $(DOC): $(DTX)
 	$(LTX) $(DTX)
 $(STY): $(DTX)
 	$(TEX) $(DTX)
-$(PDF): $(STY) $(TST)
+$(PDF): $(TST) $(STY)
 	$(LTX) $(TST)
 
 .PHONY: clean clean_doc clean_sty clean_test clean_all all sty test
-clean:
+clean: clean_test
 	-rm $(shell find $(NAM)\.* | grep -Ev '\.dtx$$' | grep -Ev '\.sty$$' | grep -Ev '\.pdf$$')
 clean_doc:
 	-rm $(DOC)
